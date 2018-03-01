@@ -9,7 +9,17 @@ const receiveStudentJson = (message, studentData) => ({
   message,
   studentData
 })
+
+const postStudentBegin = () => ({
+  type: types.POST_STUDENT_BEGIN
+})
+const postStudentSuccess = message => ({
+  type: types.POST_STUDENT_SUCCESS,
+  message
+})
 export default {
   requestStudentJson,
-  receiveStudentJson
+  receiveStudentJson,
+  postStudentBegin,
+  postStudentSuccess
 }

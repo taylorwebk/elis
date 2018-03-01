@@ -10,9 +10,9 @@ const TableCont = ({ module, filter }) => {
   const students = Object.keys(module.estudiantes).filter((key) => {
     const student = module.estudiantes[key]
     if (
-      student.nombres.indexOf(filter) >= 0 ||
-      student.apellidos.indexOf(filter) >= 0 ||
-      student.correo.indexOf(filter) >= 0 ||
+      student.nombres.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
+      student.apellidos.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
+      student.correo.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
       filter.length === 0
     ) {
       return true
@@ -65,7 +65,10 @@ const TableCont = ({ module, filter }) => {
             <Table.HeaderCell colSpan="3">
               <Icon name={header[module.id].icon} color={header[module.id].color} size="big" />
               <span style={{ color: header[module.id].color }}>
-                {module.nombre}
+                {module.nombre}&nbsp;&nbsp;
+                <b style={{ fontSize: 19 }}>
+                  ({Object.keys(module.estudiantes).length} Inscritos)
+                </b>
               </span>
             </Table.HeaderCell>
           </Table.Row>

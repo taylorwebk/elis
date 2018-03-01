@@ -32,7 +32,9 @@ class SideMenu extends Component {
     }
     return (
       <Fragment>
+        <br />
         <Image src={logo} />
+        <br />
         <Menu pointing secondary vertical color={colors[colorIndex]}>
           <Menu.Item
             as="div"

@@ -3,11 +3,15 @@ import Student from './Students'
 import { studentOperations } from './duck'
 
 const mapStateToProps = (state) => {
-  const { studentData, showSpinner, message } = state.student
+  const {
+    studentData, showSpinner, message, postMessage, postSpinner
+  } = state.student
   return {
     studentData,
     showSpinner,
-    message
+    message,
+    postMessage,
+    postSpinner
   }
 }
 
@@ -15,8 +19,12 @@ const mapDispatchToProps = (dispatch) => {
   const fetchStudentJson = () => {
     dispatch(studentOperations.fetchStudentsJson())
   }
+  const sendStudent = (student) => {
+    dispatch(studentOperations.sendStudent(student))
+  }
   return {
-    fetchStudentJson
+    fetchStudentJson,
+    sendStudent
   }
 }
 

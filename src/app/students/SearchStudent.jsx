@@ -5,10 +5,13 @@ import { openNewTab, baseip } from '../../utils'
 const handleClick = () => {
   openNewTab(`${baseip}reporte`)
 }
-const SearchStudent = ({ filter, changeFilter }) => (
+const SearchStudent = ({ filter, changeFilter, openForm }) => (
   <Container textAlign="right">
     <br />
     <br />
+    <Button color="green" onClick={openForm}>
+      INSCRIBIR
+    </Button>
     <Button color="blue" onClick={handleClick}>
       IMPRIMIR TODO
     </Button>&nbsp;&nbsp;

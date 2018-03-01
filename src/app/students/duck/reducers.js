@@ -3,7 +3,9 @@ import types from './types'
 const initialState = {
   message: '',
   studentData: {},
-  showSpinner: false
+  showSpinner: false,
+  postSpinner: false,
+  postMessage: ''
 }
 const studentReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,7 +16,6 @@ const studentReducer = (state = initialState, action) => {
         showSpinner: true
       }
     }
-
     case types.RECEIVE_STUDENTS_JSON: {
       const { studentData, message } = action
       return {
@@ -22,6 +23,20 @@ const studentReducer = (state = initialState, action) => {
         studentData,
         message,
         showSpinner: false
+      }
+    }
+    case types.POST_STUDENT_BEGIN: {
+      return {
+        ...state,
+        postMessage: '',
+        postSpinner: true
+      }
+    }
+    case types.POST_STUDENT_SUCCESS: {
+      return {
+        ...state,
+        postMessage: action.message,
+        postSpinner: false
       }
     }
 

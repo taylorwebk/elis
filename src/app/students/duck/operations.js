@@ -4,6 +4,7 @@ import { baseip } from '../../../utils'
 
 const requestStudentJsonAction = creators.requestStudentJson
 const receiveStudentJsonAction = creators.receiveStudentJson
+const { postStudentBegin, postStudentSuccess } = creators
 
 const arrayToObject = array => (
   array.reduce((obj, item) => {
@@ -11,7 +12,14 @@ const arrayToObject = array => (
     return obj
   }, {})
 )
-
+const sendStudent = student => (dispatch) => {
+  dispatch(postStudentBegin())
+  return axios.post(`${baseip}student`, student)
+    .then((res) => {
+      const { data } = res
+      dispatch(postStudentSuccess(data.usrmsg))
+    })
+}
 const fetchStudentsJson = () => (dispatch) => {
   dispatch(requestStudentJsonAction())
   return axios.get(`${baseip}student`)
@@ -35,5 +43,6 @@ const fetchStudentsJson = () => (dispatch) => {
     })
 }
 export default {
-  fetchStudentsJson
+  fetchStudentsJson,
+  sendStudent
 }

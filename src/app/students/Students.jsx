@@ -6,12 +6,14 @@ import MessagePop from './../common/MessagePop'
 import HeaderStudent from './HeaderStudent'
 import SearchStudent from './SearchStudent'
 import TableCont from './TableCont'
+import FormModal from './FormModal'
 
 class Student extends Component {
   constructor() {
     super()
     this.state = {
-      filter: ''
+      filter: '',
+      modalForm: false
     }
   }
   componentDidMount() {
@@ -28,6 +30,25 @@ class Student extends Component {
         toastTimeout: 2500 // default: 3000 ms
       })
     }
+    if (prevProps.postMessage !== this.props.postMessage) {
+      ButterToast.raise({
+        content: () => (
+          <MessagePop message={this.props.postMessage} type="success" />
+        ),
+        toastTimeout: 2500 // default: 3000 ms
+      })
+      this.fetchStudents()
+    }
+  }
+  openForm = () => {
+    this.setState({
+      modalForm: true
+    })
+  }
+  closeForm = () => {
+    this.setState({
+      modalForm: false
+    })
   }
   changeFilter = (e, { value }) => {
     this.setState({
@@ -38,8 +59,10 @@ class Student extends Component {
     this.props.fetchStudentJson()
   }
   render() {
-    const { filter } = this.state
-    const { showSpinner, studentData } = this.props
+    const { filter, modalForm } = this.state
+    const {
+      showSpinner, studentData, sendStudent, postSpinner
+    } = this.props
     let content = null
     if (Object.keys(studentData).length > 0) {
       content = Object.keys(studentData).map(key => (
@@ -49,12 +72,13 @@ class Student extends Component {
     return (
       <div>
         <ButterToast trayPosition="top-right" />
-        {showSpinner ? <Load message="Cargando Contenido..." /> : null}
+        {showSpinner || postSpinner ? <Load message="Cargando Contenido..." /> : null}
         <br />
         <br />
         <br />
         <HeaderStudent />
-        <SearchStudent filter={filter} changeFilter={this.changeFilter} />
+        <SearchStudent filter={filter} changeFilter={this.changeFilter} openForm={this.openForm} />
+        <FormModal open={modalForm} closeForm={this.closeForm} sendStudent={sendStudent} />
         {content}
       </div>
     )
