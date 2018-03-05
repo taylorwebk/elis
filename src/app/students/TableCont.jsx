@@ -1,12 +1,19 @@
 import React from 'react'
+import axios from 'axios'
 import { Table, Icon, Container, Button } from 'semantic-ui-react'
 import { openNewTab, baseip } from '../../utils'
 
 const handleClick = (idmodule, idstudent) => {
   openNewTab(`${baseip}reporte/${idmodule}/${idstudent}`)
 }
+const deleteStudent = (fetchStudents, idmodule, idstudent) => {
+  axios.delete(`${baseip}/student/${idmodule}/${idstudent}`)
+    .then(() => {
+      fetchStudents()
+    })
+}
 
-const TableCont = ({ module, filter }) => {
+const TableCont = ({ module, filter, fetchStudents }) => {
   const students = Object.keys(module.estudiantes).filter((key) => {
     const student = module.estudiantes[key]
     if (
@@ -31,6 +38,14 @@ const TableCont = ({ module, filter }) => {
           <Button.Content visible>
             <Icon name="print" />
           </Button.Content>
+        </Button>
+        <Button
+          color="red"
+          icon
+          inverted
+          onClick={() => { deleteStudent(fetchStudents, module.id, student.id) }}
+        >
+          <Icon name="remove" />
         </Button>
         { `${student.apellidos} ${student.nombres}` }
       </Table.Cell>

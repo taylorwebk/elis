@@ -66,7 +66,12 @@ class Student extends Component {
     let content = null
     if (Object.keys(studentData).length > 0) {
       content = Object.keys(studentData).map(key => (
-        <TableCont key={key} module={studentData[key]} filter={filter} />
+        <TableCont
+          key={key}
+          module={studentData[key]}
+          filter={filter}
+          fetchStudents={this.fetchStudents}
+        />
       ))
     }
     return (
